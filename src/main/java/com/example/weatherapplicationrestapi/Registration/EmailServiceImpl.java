@@ -24,8 +24,8 @@ public class EmailServiceImpl implements EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            helper.setSubject("Confirm your account - ToDoApplication");
-            helper.setFrom("t.mikula@centrum.cz");
+            helper.setSubject("Confirm your account - WeatherApplication");
+            helper.setFrom("tomas.mikula@centrum.cz");
             mailSender.send(mimeMessage);
         } catch (MessagingException e){
             LOGGER.error("failed to send email");

@@ -30,6 +30,7 @@ dependencies {
     implementation 'com.auth0:java-jwt:4.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-mail:1.2.0.RELEASE'
     implementation 'com.sun.mail:javax.mail:1.6.2'
+    implementation 'commons-validator:commons-validator:1.7'
     implementation 'junit:junit:4.13.2'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

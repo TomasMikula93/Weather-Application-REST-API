@@ -1,6 +1,6 @@
 package com.example.weatherapplicationrestapi.Registration;
 
-import com.example.todoapp.Models.ToDoUser;
+import com.example.weatherapplicationrestapi.Models.WAUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,14 +20,14 @@ public class ConfirmationToken {
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
     @ManyToOne
-    @JoinColumn(name = "toDoUser")
-    private ToDoUser toDoUser;
+    @JoinColumn(name = "user")
+    private WAUser waUser;
 
     public ConfirmationToken(String token, LocalDateTime createdAt,
-                             LocalDateTime expiresAt, ToDoUser toDoUser) {
+                             LocalDateTime expiresAt, WAUser waUser) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.toDoUser = toDoUser;
+        this.waUser = waUser;
     }
 }
