@@ -8,21 +8,19 @@ import com.example.weatherapplicationrestapi.Registration.ConfirmationTokenServi
 import com.example.weatherapplicationrestapi.Services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;
     private final ConfirmationTokenService confirmationTokenService;
 
-    @GetMapping("/registration")
+    @PostMapping("/registration")
     public ResponseEntity<Object> registration(@RequestBody WAUser user) {
         if (userService.checkIfUsernameExists(user.getUsername())) {
             return ResponseEntity.status(400).body(new ErrorMsgDTO("This username already exists!"));

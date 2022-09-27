@@ -50,17 +50,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         userRepository.save(waUser);
 
-//        String token = UUID.randomUUID().toString();
-//        ConfirmationToken confirmationToken = new ConfirmationToken(
-//                token,
-//                LocalDateTime.now(),
-//                LocalDateTime.now().plusMinutes(15),
-//                waUser
-//        );
-//        confirmationTokenService.saveConfirmationToken(confirmationToken);
-//
-//        String link = "http://localhost:8080/api/registration/confirm?token=" + token;
-//        emailService.send(user.getEmail(), buildEmail(user.getUsername(), link));
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                waUser
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        String link = "http://localhost:8080/api/registration/confirm?token=" + token;
+        emailService.send(user.getEmail(), buildEmail(user.getUsername(), link));
     }
 
     @Override
