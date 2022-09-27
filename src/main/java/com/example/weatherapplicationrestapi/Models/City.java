@@ -19,8 +19,8 @@ public class City {
     private double latitude;
 
     @ManyToOne
-    @JoinColumn(name = "waUser")
-    private WAUser waUser;
+    @JoinColumn(name = "userList")
+    private UserList userList;
 
     public City(String name, double longitude, double latitude) {
         this.name = name;

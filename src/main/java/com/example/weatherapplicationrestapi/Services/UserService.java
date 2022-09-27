@@ -11,4 +11,6 @@ public interface UserService {
     void enableAppUser(String username);
 
     WAUser findByUser(WAUser user);
+
+    boolean userOwnsList(String username, long id);
 }

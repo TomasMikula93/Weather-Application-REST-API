@@ -1,11 +1,13 @@
 package com.example.weatherapplicationrestapi.Services;
 
 import com.example.weatherapplicationrestapi.Models.Enums.Roles;
+import com.example.weatherapplicationrestapi.Models.UserList;
 import com.example.weatherapplicationrestapi.Models.WAUser;
 import com.example.weatherapplicationrestapi.Registration.ConfirmationToken;
 import com.example.weatherapplicationrestapi.Registration.ConfirmationTokenService;
 import com.example.weatherapplicationrestapi.Registration.EmailService;
 import com.example.weatherapplicationrestapi.Registration.EmailValidation;
+import com.example.weatherapplicationrestapi.Repositories.UserListRepository;
 import com.example.weatherapplicationrestapi.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
@@ -27,6 +30,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final EmailValidation emailValidation;
     private final UserRepository userRepository;
+    private final UserListRepository userListRepository;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailService emailService;
 
@@ -47,7 +51,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 encodedPassword,
                 user.getEmail(),
                 Roles.USER.getRole());
+        userRepository.save(waUser);
 
+        UserList userList = new UserList(waUser, new ArrayList<>());
+        userListRepository.save(userList);
+
+        waUser.setUserList(userList);
         userRepository.save(waUser);
 
         String token = UUID.randomUUID().toString();
@@ -77,6 +86,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public boolean userOwnsList(String username, long id) {
+        return userListRepository.findByWaUser_UsernameAndId(username, id).isPresent();
+    }
+
+    @Override
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         WAUser waUser = userRepository.findByUsername(username);
         if (waUser == null) {
