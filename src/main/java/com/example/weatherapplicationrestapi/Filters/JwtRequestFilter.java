@@ -42,7 +42,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (request.getRequestURI().equals("/api/login")
                 || request.getRequestURI().equals("/api/registration")
                 || request.getRequestURI().equals("/api/registration/confirm")
-                || request.getRequestURI().equals("/api/user")
         ){
             chain.doFilter(request, response);
         } else {

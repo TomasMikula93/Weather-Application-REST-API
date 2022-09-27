@@ -1,4 +1,4 @@
-# Todo Application
+# Weather Application
 Welcome to my Weather App!
 
 ## General Information
@@ -27,5 +27,5 @@ To do:
 - feel free to contact me!
 
 ## My Notes
-- for EMAIL ACTIVATION LINK, i use gmail ( smtp.gmail.com ) . You must have EmailConfig and application.properties modified.
+- for EMAIL ACTIVATION LINK, I use gmail ( smtp.gmail.com ) . You must have EmailConfig and application.properties modified.
   From May 2022, you must use generated "application password" (-> Google Account/Settings) instead of you login password.

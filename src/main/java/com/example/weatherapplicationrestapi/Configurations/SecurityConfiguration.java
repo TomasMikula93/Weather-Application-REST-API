@@ -1,7 +1,7 @@
 package com.example.weatherapplicationrestapi.Configurations;
 
-import com.example.todoapp.Filters.CustomAuthenticationFilter;
-import com.example.todoapp.Filters.JwtRequestFilter;
+import com.example.weatherapplicationrestapi.Filters.CustomAuthenticationFilter;
+import com.example.weatherapplicationrestapi.Filters.JwtRequestFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,7 +37,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/registration").permitAll();
         http.authorizeRequests().antMatchers("/api/registration/confirm").permitAll();
         http.authorizeRequests().antMatchers("/api/login").permitAll();
-        http.authorizeRequests().antMatchers("/api/user").permitAll();
         http.authorizeRequests().anyRequest().authenticated(); // any other request, must be authenticated
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new JwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);

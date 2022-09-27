@@ -33,7 +33,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     private final AuthenticationManager authenticationManager;
 
-    //firstly attempt to authenticate player
     @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -58,17 +57,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         }
         log.info("Username is: {}", username); log.info("Password is: {}", password);
 
-        // authentication will be processed internally in the Spring Security and
-        // result in two possible scenarios: successfulAuthentication or unsuccessfulAuthentication
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
     }
 
-    //then handle successfulAuthentication or unsuccessfulAuthentication
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        //org.springframework.security.core.userdetails.User
-        User user = (User) authResult.getPrincipal(); //  In the case of an authentication request with username and password, this would be the username
+        User user = (User) authResult.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         log.info("Successful login, username: {}, password: {}", user.getUsername(), user.getPassword());
 
