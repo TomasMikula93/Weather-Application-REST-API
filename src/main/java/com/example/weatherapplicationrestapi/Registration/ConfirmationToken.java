@@ -20,7 +20,7 @@ public class ConfirmationToken {
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "waUser")
     private WAUser waUser;
 
     public ConfirmationToken(String token, LocalDateTime createdAt,

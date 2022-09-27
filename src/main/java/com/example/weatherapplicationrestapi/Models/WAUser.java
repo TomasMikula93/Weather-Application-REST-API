@@ -28,9 +28,9 @@ public class WAUser implements UserDetails {
     private boolean enabled;
     private boolean locked;
 
-    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "waUser", cascade = CascadeType.ALL)
     private List<City> favouriteCities;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "waUser", cascade = CascadeType.ALL)
     private List<ConfirmationToken> listOfConfirmationTokens;
 
 
