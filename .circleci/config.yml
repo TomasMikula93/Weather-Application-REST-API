@@ -1,0 +1,73 @@
+version: 2.1 #Version of configuration
+# build job is configured
+orbs:
+  heroku: circleci/heroku@1.2.6
+
+jobs:
+  build:
+    docker:
+      - image: cimg/openjdk:17.0.1  #docker image jdk17 because we use java 17 sdk?
+        environment:
+          #H2 DB
+          DB_ROOT_USER: sa
+          DB_URL: jdbc:h2:file:~/data/tribes
+          DB_DRIVER: org.h2.Driver
+          DB_PASS: password
+          TZ: Europe/Prague
+
+          #MySQL
+    #          DB_ROOT_USER: user
+    #          DB_URL: jdbc:mysql://localhost/tribes?serverTimezone=UTC
+    #          DB_DRIVER: com.mysql.cj.jdbc.Driver
+
+    steps: #the repository is checked out from GitHub.
+      - checkout
+
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+      - run: # this command will download the required dependencies
+          name: Gradlew build
+          command: |
+            sudo chmod +x gradlew
+            ./gradlew build
+
+      - store_test_results: # required to view test result in CircleCI
+          path: build/test-results
+
+          # After that, reports (test execution, CheckStyle) are saved to the Artifacts section.
+          # Checkstyle = Code style checks
+      - store_artifacts:
+          path: build/reports/tests/test
+          destination: test_result
+
+      - store_artifacts:
+          path: build/reports/checkstyle
+          destination: checkstyle
+
+      - store_artifacts:
+          path: build/reports/pmd
+          destination: pmd
+
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+
+      - run: gradle test
+
+workflows:
+  build_test_deploy:
+    jobs:
+      - build
+      - heroku/deploy-via-git:
+          force: false
+          maintenance-mode: false
+          api-key: HEROKU_API_KEY
+          app-name: todo-application-tm
+          branch: master
+
+
+
+
