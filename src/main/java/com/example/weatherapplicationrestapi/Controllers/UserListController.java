@@ -22,18 +22,27 @@ public class UserListController {
 
     @PostMapping("/city/{id}")
     public ResponseEntity<Object> addFavouriteCity(@RequestBody City city, @RequestHeader(value = "Authorization") String token,
-                                                   @PathVariable long id){
+                                                   @PathVariable long id) {
         if (!userService.userOwnsList(JwtRequestFilter.username, id) || token.isEmpty()
                 || token.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(new ErrorMsgDTO("This List does not belong to authenticated player"));
         }
-        if(!userListService.checkIfListExists(id)){
+        if (!userListService.checkIfListExists(id)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(new ErrorMsgDTO("This List does not exist"));
         }
 
         userListService.saveFavouriteCity(city, id);
         return ResponseEntity.status(200).body(new MessageDTO("City has been added to your list."));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<Object> showList(@RequestHeader(value = "Authorization") String token) {
+        if (token.isEmpty() || token.isBlank()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ErrorMsgDTO("Wrong or empty token"));
+        }
+        return ResponseEntity.status(200).body(userListService.makeListDTO(JwtRequestFilter.username));
     }
 }
