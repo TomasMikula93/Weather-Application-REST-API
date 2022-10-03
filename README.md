@@ -21,7 +21,12 @@ Welcome to my Weather App!
 - JavaMail - Email verification, account activation link
 
 ## Features
-
+- JSON Responses from Weather Application
+  {
+  "country": "CZ",
+  "name": "Žižkov",
+  "temperature": "14,36 °C"
+  }
 
 ## Room for Improvement
 To do:
