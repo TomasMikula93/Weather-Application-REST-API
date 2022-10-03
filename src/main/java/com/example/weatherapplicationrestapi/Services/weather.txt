@@ -1,0 +1,9 @@
+    "message": "good weather{\"coord\":{\"lon\":14.6543,\"lat\":49.9917},\"weather\":[{\"id\":803,\"main\":\"Clouds\",
+    \"description\":\"broken clouds\",\"icon\":\"04d\"}],\"base\":\"stations\",\"main\":{\"temp\":285.3,
+    \"feels_like\":284.66,\"temp_min\":284.14,\"temp_max\":286.53,\"pressure\":1022,\"humidity\":80},
+    \"visibility\":10000,\"wind\":{\"speed\":5.66,\"deg\":270},\"clouds\":{\"all\":75},\"dt\":1664790656,
+    \"sys\":{\"type\":2,\"id\":20854,\"country\":\"CZ\",\"sunrise\":1664773436,\"sunset\":1664815010},
+    \"timezone\":7200,\"id\":3066878,\"name\":\"Říčany\",\"cod\":200}"
+
+
+    	‑273.15 kelvin to celsius

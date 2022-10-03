@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class UserController {
 
     private final UserService userService;
-    private final WebClient.Builder webClientBuilder;
+
     private final ConfirmationTokenService confirmationTokenService;
 
     @PostMapping("/registration")
@@ -65,26 +65,7 @@ public class UserController {
         return ResponseEntity.status(200).body(new MessageDTO("Thank you, your account is activated!"));
     }
 
-//    @PostMapping("/test")
-//    public ResponseEntity<Object> userRegistrationPost(@RequestBody City city) {
-//        String apiKey = System.getenv("API_KEY");
-//        String responseBody = webClientBuilder.build()
-//                .post()
-//                //TODO by name of town and county code
-//                .uri("https://api.openweathermap.org/data/2.5/weather?q=Říčany,cz&APPID=" + apiKey)
-//                //TODO by coordinates lon + lat
-////                .uri("https://api.openweathermap.org/data/2.5/weather?lat=" + city.getLatitude() +
-////                        "&lon=" + city.getLongitude() + "&appid=" + apiKey)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON)
-//                .retrieve()
-//                .onStatus(HttpStatus::isError, response -> Mono.empty())
-//                .bodyToMono(String.class)
-//                .block();
 //
-//        return ResponseEntity.status(200).body(new MessageDTO("good weather" + responseBody));
-//
-//    }
 }
 
 

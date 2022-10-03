@@ -7,9 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CityDTO {
-    private long id;
+public class WeatherDTO {
+    private String country;
     private String name;
-    private double longitude;
-    private double latitude;
+    private String temperature;
 }
