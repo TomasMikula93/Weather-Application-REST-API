@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -88,6 +89,39 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public boolean userOwnsList(String username, long id) {
         return userListRepository.findByWaUser_UsernameAndId(username, id).isPresent();
+    }
+
+    @Override
+    public void generateNewToken(String username, String email) {
+        WAUser waUser = userRepository.findByUsername(username);
+
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                waUser
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        String link = "http://localhost:8080/api/registration/confirm?token=" + token;
+        emailService.send(waUser.getEmail(), buildEmail(waUser.getUsername(), link));
+    }
+
+    @Override
+    public boolean userAccountIsEnabled(String username) {
+        return userRepository.findByUsername(username).isEnabled();
+    }
+
+    @Override
+    public boolean emailMatches(String email, String username) {
+        WAUser waUser = userRepository.findByUsername(username);
+        return Objects.equals(waUser.getEmail(), email);
+    }
+
+    @Override
+    public boolean checkIfEmailExists(String email) {
+        return userRepository.findOptionalByEmail(email).isPresent();
     }
 
     @Override

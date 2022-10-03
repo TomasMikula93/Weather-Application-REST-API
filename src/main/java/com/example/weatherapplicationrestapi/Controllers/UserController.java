@@ -31,6 +31,9 @@ public class UserController {
         if (userService.checkIfUsernameExists(user.getUsername())) {
             return ResponseEntity.status(400).body(new ErrorMsgDTO("This username already exists!"));
         }
+        if (userService.checkIfEmailExists(user.getEmail())) {
+            return ResponseEntity.status(400).body(new ErrorMsgDTO("This email already exists!"));
+        }
         if (user.getUsername().isEmpty() || user.getUsername().isBlank() || user.getUsername() == null) {
             return ResponseEntity.status(400).body(new ErrorMsgDTO("Incorrect username."));
         }
@@ -65,7 +68,25 @@ public class UserController {
         return ResponseEntity.status(200).body(new MessageDTO("Thank you, your account is activated!"));
     }
 
-//
+    @GetMapping("registration/newToken")
+    public ResponseEntity<Object> generateNewConfirmToken(@RequestBody WAUser wauser) {
+        if (!userService.checkIfUsernameExists(wauser.getUsername())) {
+            return ResponseEntity.status(400).body(new ErrorMsgDTO("This username doesn't exist!"));
+        }
+        if (!userService.emailIsValidate(wauser.getEmail())) {
+            return ResponseEntity.status(400).body(new ErrorMsgDTO("Email is not valid"));
+        }
+        if(!userService.emailMatches(wauser.getEmail(), wauser.getUsername())){
+            return ResponseEntity.status(400).body(new ErrorMsgDTO("Incorrect email for this username"));
+        }
+        if (userService.userAccountIsEnabled(wauser.getUsername())) {
+            return ResponseEntity.status(400).body(new ErrorMsgDTO("Account is already activated"));
+        }
+
+        userService.generateNewToken(wauser.getUsername(), wauser.getEmail());
+        return ResponseEntity.status(200).body(new MessageDTO("Your new confirmation token has been generated!"));
+    }
+
 }
 
 

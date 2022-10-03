@@ -69,4 +69,6 @@ public class WAUser implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
+
 }
