@@ -17,4 +17,6 @@ public interface UserListService {
     String takeCountryCodeFromWeatherResponse(String message);
     String takeNameFromWeatherResponse(String message);
     String takeCelsiusFromWeatherResponse(String message);
+
+    WeatherDTO showWeatherInLocation(double latitude, double longitude);
 }

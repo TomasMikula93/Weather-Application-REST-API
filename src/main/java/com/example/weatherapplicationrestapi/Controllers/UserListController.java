@@ -56,8 +56,8 @@ public class UserListController {
         return ResponseEntity.status(200).body(userListService.makeListDTO(JwtRequestFilter.username));
     }
 
-    @PostMapping("/weatherInCity/{id}")
-    public ResponseEntity<Object> userRegistrationPost(@RequestBody City city, @RequestHeader(value = "Authorization") String token,
+    @PostMapping("/weather/{id}")
+    public ResponseEntity<Object> weatherInMyFavouriteCity(@RequestBody City city, @RequestHeader(value = "Authorization") String token,
                                                        @PathVariable long id) {
 
         if (!userService.userOwnsList(JwtRequestFilter.username, id) || token.isEmpty()
@@ -78,6 +78,16 @@ public class UserListController {
                     body(new ErrorMsgDTO("Your account isn't activated yet, check you mail for activation link."));
         }
         return ResponseEntity.status(200).body(userListService.showWeatherInMyFavouriteCity(city.getId()));
+
+    }
+
+    @GetMapping("/weather")
+    public ResponseEntity<Object> weatherInLocation(@RequestBody City city, @RequestHeader(value = "Authorization") String token) {
+        if(!userService.userAccountIsEnabled(JwtRequestFilter.username)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ErrorMsgDTO("Your account isn't activated yet, check you mail for activation link."));
+        }
+        return ResponseEntity.status(200).body(userListService.showWeatherInLocation(city.getLatitude(), city.getLongitude()));
 
     }
 //

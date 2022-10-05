@@ -65,8 +65,6 @@ public class UserListServiceImpl implements UserListService {
     public WeatherDTO showWeatherInMyFavouriteCity(long id) {
         String apiKey = System.getenv("API_KEY");
         City city = cityRepository.findById(id);
-        String name = "";
-
 
         String responseBody = webClientBuilder.build()
                 .post()
@@ -111,5 +109,25 @@ public class UserListServiceImpl implements UserListService {
         double kelvin = Double.parseDouble(arr2[2]);
         double celsius = kelvin - 273.15;
         return String.valueOf(df.format(celsius));
+    }
+
+    @Override
+    public WeatherDTO showWeatherInLocation(double latitude, double longitude) {
+        String apiKey = System.getenv("API_KEY");
+
+        String responseBody = webClientBuilder.build()
+                .post()
+                .uri("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude +
+                        "&lon=" + longitude + "&appid=" + apiKey)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(HttpStatus::isError, response -> Mono.empty())
+                .bodyToMono(String.class)
+                .block();
+
+        return new WeatherDTO(takeCountryCodeFromWeatherResponse(responseBody),
+                takeNameFromWeatherResponse(responseBody),
+                takeCelsiusFromWeatherResponse(responseBody) + " °C");
     }
 }
