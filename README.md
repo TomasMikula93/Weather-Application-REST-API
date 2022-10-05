@@ -27,7 +27,22 @@ Welcome to my Weather App!
   "name": "Žižkov",
   "temperature": "14,36 °C"
   }
-
+- Make you list of favourite Cities {
+  "listOfFavouriteCities": [
+  {
+  "id": 1,
+  "name": "Praha",
+  "longitude": 14.43780049999,
+  "latitude": 50.0755381
+  },
+  {
+  "id": 2,
+  "name": "Říčany",
+  "longitude": 14.654276,
+  "latitude": 49.991678
+  }
+  ]
+  }
 ## Room for Improvement
 To do:
 - React.js front-end
