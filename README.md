@@ -7,8 +7,10 @@
 ## Weather Application
 Welcome to my Weather App!
 
-## General Information
+## General Information 
 - Spring Boot Application
+- Automatically deployed on heroku via CircleCI
+- https://weather-application-tm.herokuapp.com/
 
 ## Technologies Used
 - REST API
