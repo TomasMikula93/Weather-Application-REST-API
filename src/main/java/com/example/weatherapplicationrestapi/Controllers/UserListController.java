@@ -35,7 +35,10 @@ public class UserListController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(new ErrorMsgDTO("This List does not exist"));
         }
-
+        if(!userService.userAccountIsEnabled(JwtRequestFilter.username)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ErrorMsgDTO("Your account isn't activated yet, check you mail for activation link."));
+        }
         userListService.saveFavouriteCity(city, id);
         return ResponseEntity.status(200).body(new MessageDTO("City has been added to your list."));
     }
@@ -45,6 +48,10 @@ public class UserListController {
         if (token.isEmpty() || token.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(new ErrorMsgDTO("Wrong or empty token"));
+        }
+        if(!userService.userAccountIsEnabled(JwtRequestFilter.username)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ErrorMsgDTO("Your account isn't activated yet, check you mail for activation link."));
         }
         return ResponseEntity.status(200).body(userListService.makeListDTO(JwtRequestFilter.username));
     }
@@ -66,7 +73,10 @@ public class UserListController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(new ErrorMsgDTO("This City does not exist"));
         }
-
+        if(!userService.userAccountIsEnabled(JwtRequestFilter.username)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ErrorMsgDTO("Your account isn't activated yet, check you mail for activation link."));
+        }
         return ResponseEntity.status(200).body(userListService.showWeatherInMyFavouriteCity(city.getId()));
 
     }

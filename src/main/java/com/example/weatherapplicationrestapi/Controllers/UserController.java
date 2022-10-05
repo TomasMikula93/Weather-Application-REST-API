@@ -87,7 +87,6 @@ public class UserController {
 
         }
 
-        //TODO check if previous token is expired first!
         userService.generateNewToken(wauser.getUsername(), wauser.getEmail());
         return ResponseEntity.status(200).body(new MessageDTO("Your new confirmation token has been generated!"));
     }
