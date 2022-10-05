@@ -65,7 +65,7 @@ workflows:
           force: false
           maintenance-mode: false
           api-key: HEROKU_API_KEY
-          app-name: todo-application-tm
+          app-name: weather-application-tm
           branch: master
 
 
