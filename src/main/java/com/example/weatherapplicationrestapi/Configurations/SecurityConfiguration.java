@@ -37,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/registration").permitAll();
         http.authorizeRequests().antMatchers("/api/test/{id}").permitAll(); // testing purpose
         http.authorizeRequests().antMatchers("/api/registration/confirm").permitAll();
+        http.authorizeRequests().antMatchers("/api/registration/newToken").permitAll();
         http.authorizeRequests().antMatchers("/api/login").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);

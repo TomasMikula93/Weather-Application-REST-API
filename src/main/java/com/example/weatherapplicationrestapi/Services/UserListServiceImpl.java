@@ -70,9 +70,6 @@ public class UserListServiceImpl implements UserListService {
 
         String responseBody = webClientBuilder.build()
                 .post()
-//                //TODO by name of town and county code
-//                .uri("https://api.openweathermap.org/data/2.5/weather?q=Říčany,cz&APPID=" + apiKey)
-//                //TODO by coordinates lon + lat
                 .uri("https://api.openweathermap.org/data/2.5/weather?lat=" + city.getLatitude() +
                         "&lon=" + city.getLongitude() + "&appid=" + apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -108,9 +105,9 @@ public class UserListServiceImpl implements UserListService {
     @Override
     public String takeCelsiusFromWeatherResponse(String message) {
         DecimalFormat df = new DecimalFormat("0.00");
-        String[]arr = message.split(",");
+        String[] arr = message.split(",");
         String name = arr[7];
-        String[]arr2 = name.split(":");
+        String[] arr2 = name.split(":");
         double kelvin = Double.parseDouble(arr2[2]);
         double celsius = kelvin - 273.15;
         return String.valueOf(df.format(celsius));

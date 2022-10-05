@@ -125,6 +125,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public boolean checkIfTokenExpired(WAUser wauser) {
+        WAUser user = userRepository.findByUsername(wauser.getUsername());
+        for (int i = 0; i < user.getListOfConfirmationTokens().size(); i++) {
+            if(user.getListOfConfirmationTokens().get(i).getConfirmedAt() == null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         WAUser waUser = userRepository.findByUsername(username);

@@ -82,7 +82,12 @@ public class UserController {
         if (userService.userAccountIsEnabled(wauser.getUsername())) {
             return ResponseEntity.status(400).body(new ErrorMsgDTO("Account is already activated"));
         }
+        if(userService.checkIfTokenExpired(wauser)){
+            return ResponseEntity.status(400).body(new ErrorMsgDTO("Previous confirmation token is still active"));
 
+        }
+
+        //TODO check if previous token is expired first!
         userService.generateNewToken(wauser.getUsername(), wauser.getEmail());
         return ResponseEntity.status(200).body(new MessageDTO("Your new confirmation token has been generated!"));
     }

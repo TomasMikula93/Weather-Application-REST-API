@@ -21,4 +21,6 @@ public interface UserService {
 
     boolean emailMatches(String email, String username);
     boolean checkIfEmailExists(String email);
+
+    boolean checkIfTokenExpired(WAUser wauser);
 }
